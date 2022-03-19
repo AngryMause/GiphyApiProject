@@ -4,20 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
 import com.bumptech.glide.Glide
-import com.example.giphytest.Data
+import com.example.giphytest.GiphyModel
 
 import com.example.giphytest.databinding.RvItemLayoutBinding
 
 class MyAdapter (val context: Context):
     RecyclerView.Adapter<MyAdapter.MyHolder>() {
-    private val list = mutableListOf<Data>()
+    private val list = mutableListOf<GiphyModel>()
 
     inner class MyHolder(val binding: RvItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(url: String?) {
             Glide.with(context).load(url).into(binding.giphyIm)
-            binding.giphyIm.load(url)
 //            binding.giphyIm.setOnClickListener {
 //                onClickListener.let { click ->
 //                    click?.let { it1 ->
@@ -48,13 +46,13 @@ class MyAdapter (val context: Context):
     }
 
 
-    fun addItems(newItems: List<Data>) {
+    fun addItems(newItems: List<GiphyModel>) {
         list.addAll(newItems)
         notifyDataSetChanged()
     }
 
-    var onClickListener: ((Data) -> Unit)? = null
-    fun setOnItemClickListener(listener: (Data) -> Unit) {
+    var onClickListener: ((GiphyModel) -> Unit)? = null
+    fun setOnItemClickListener(listener: (GiphyModel) -> Unit) {
         onClickListener = listener
     }
 

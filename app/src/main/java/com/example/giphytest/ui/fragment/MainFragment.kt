@@ -4,19 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.giphytest.Data
-import com.example.giphytest.adapter.MyAdapter
+import com.example.giphytest.GiphyModel
 import com.example.giphytest.databinding.FragmentMainBinding
 
 class MainFragment : BaseFragment() {
 //    private lateinit var adapter: MyAdapter
-    private lateinit var imageList: ArrayList<Data>
+    private lateinit var imageList: ArrayList<GiphyModel>
 
     //    private lateinit var  fragmentManager:FragmentManager
     private lateinit var fullScreenFragment: FullScreenFragment
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private var MY_TAG = "MainFragment"
+
 
 
     companion object {
