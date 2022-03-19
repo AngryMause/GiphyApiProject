@@ -1,39 +1,43 @@
 package com.example.giphytest.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import com.example.giphytest.Data
 
 import com.example.giphytest.databinding.FragmentFullScreenBinding
 
 
 class FullScreenFragment : BaseFragment() {
-
+    var _binding: FragmentFullScreenBinding? = null
+    val binding get() = _binding!!
 
     companion object {
-        fun getNewInstance(arg: Bundle?): FullScreenFragment {
+        fun getNewInstance(str: String, arg: Data?): FullScreenFragment {
             val fullScreenFragment = FullScreenFragment()
-            fullScreenFragment.arguments = arg
+            val bundle = Bundle()
+            fullScreenFragment.arguments = bundle
             return fullScreenFragment
         }
     }
-     var _binding: FragmentFullScreenBinding? = null
-     val binding get() = _binding!!
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Tag2", " My arguments ${arguments.toString()}")
-        val mytext = arguments?.getSerializable("list")
-        if (mytext == null) {
-            Toast.makeText(requireContext(), "arg == Null ", Toast.LENGTH_SHORT).show()
-        } else {
-            binding.fullIm.setImageResource(mytext as Int)
-            binding.textView.text= mytext.toString()
-        }
+        val myModel: Data = arguments?.getParcelable("list")!!
     }
+
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        val animation= TransitionInflater.from(requireContext()).inflateTransition(
+//            android.R.transition.move
+//        )
+//        sharedElementEnterTransition=animation
+//        sharedElementReturnTransition=animation
+//    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

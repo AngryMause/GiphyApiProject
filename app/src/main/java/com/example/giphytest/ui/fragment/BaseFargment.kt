@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.giphytest.databinding.FragmentMainBinding
 
 open class BaseFragment  :Fragment() {
-
+//    protected lateinit var myBundle: Bundle
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

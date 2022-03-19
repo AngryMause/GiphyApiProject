@@ -1,55 +1,31 @@
 package com.example.giphytest.adapter
 
 import android.content.Context
-import android.nfc.Tag
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.giphytest.MyModel
+import coil.api.load
+import com.bumptech.glide.Glide
+import com.example.giphytest.Data
 
 import com.example.giphytest.databinding.RvItemLayoutBinding
-import com.example.giphytest.ui.activity.MainActivity
-import com.giphy.sdk.analytics.GiphyPingbacks.context
 
-class MyAdapter(
-    private val list: List<MyModel>
-    ,private  var context: Context
-) :
+class MyAdapter (val context: Context):
     RecyclerView.Adapter<MyAdapter.MyHolder>() {
+    private val list = mutableListOf<Data>()
 
     inner class MyHolder(val binding: RvItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(myModel: MyModel, position: Int) {
-            binding.giphyIm.setImageResource(myModel.image)
-
-            binding.giphyIm.setOnClickListener {
-                onClickListener.let { click ->
-                    click?.let { it1 ->
-                        it1(list.get(position))
-                        Log.d("Image", "position ${ bindingAdapterPosition.toString()}  ")
-                        notifyDataSetChanged()
-                    }
-
-                }
-
-            }
-//            itemView.setOnClickListener { click ->
+        fun bind(url: String?) {
+            Glide.with(context).load(url).into(binding.giphyIm)
+            binding.giphyIm.load(url)
+//            binding.giphyIm.setOnClickListener {
 //                onClickListener.let { click ->
 //                    click?.let { it1 ->
 //                        it1(list.get(position))
-//                        Log.d("Image", "position ${ bindingAdapterPosition.toString()}  ")
-//                        notifyDataSetChanged()
 //                    }
-//
 //                }
-//
 //            }
-
         }
-
     }
 
     override fun onCreateViewHolder(
@@ -67,14 +43,18 @@ class MyAdapter(
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        val image = list[position]
-        holder.bind(image, position)
+        val url = list[position].url
+        holder.bind(url)
     }
 
 
+    fun addItems(newItems: List<Data>) {
+        list.addAll(newItems)
+        notifyDataSetChanged()
+    }
 
-    var onClickListener: ((MyModel) -> Unit)? = null
-    fun setOnItemClickListener(listener: (MyModel) -> Unit) {
+    var onClickListener: ((Data) -> Unit)? = null
+    fun setOnItemClickListener(listener: (Data) -> Unit) {
         onClickListener = listener
     }
 
