@@ -23,7 +23,7 @@ object GiphyApiImp {
 
     suspend fun getListOfGif(): List<GiphyModel> {
         return withContext(Dispatchers.IO) {
-            giphyServise.getList().data.map { image ->               
+            giphyServise.getList().data.map { image ->
                 GiphyModel(image.downSizedMedium?.url)
             }
         }
