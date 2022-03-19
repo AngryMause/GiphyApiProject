@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.giphytest.Data
+import com.example.giphytest.ImageModel
 import com.example.giphytest.adapter.MyAdapter
 import com.example.giphytest.databinding.ActivityMainBinding
 import com.example.giphytest.viewmodel.GiphyViewModel

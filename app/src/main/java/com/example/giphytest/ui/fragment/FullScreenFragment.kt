@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.giphytest.Data
+import com.example.giphytest.ImageModel
 
 import com.example.giphytest.databinding.FragmentFullScreenBinding
 
@@ -14,7 +14,7 @@ class FullScreenFragment : BaseFragment() {
     val binding get() = _binding!!
 
     companion object {
-        fun getNewInstance(str: String, arg: Data?): FullScreenFragment {
+        fun getNewInstance(str: String, arg: ImageModel?): FullScreenFragment {
             val fullScreenFragment = FullScreenFragment()
             val bundle = Bundle()
             fullScreenFragment.arguments = bundle
@@ -25,7 +25,7 @@ class FullScreenFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val myModel: Data = arguments?.getParcelable("list")!!
+        val myModel: ImageModel = arguments?.getParcelable("list")!!
     }
 
 

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.giphytest.Data
+import com.example.giphytest.ImageModel
 import com.example.giphytest.adapter.MyAdapter
 import com.example.giphytest.databinding.FragmentMainBinding
 
 class MainFragment : BaseFragment() {
 //    private lateinit var adapter: MyAdapter
-    private lateinit var imageList: ArrayList<Data>
+    private lateinit var imageList: ArrayList<ImageModel>
 
     //    private lateinit var  fragmentManager:FragmentManager
     private lateinit var fullScreenFragment: FullScreenFragment
