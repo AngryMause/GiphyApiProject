@@ -1,6 +1,6 @@
 package com.example.giphytest.viewmodel
 
-class ViewModel {
+class ViewModel :ViewModel{
 
 
 
