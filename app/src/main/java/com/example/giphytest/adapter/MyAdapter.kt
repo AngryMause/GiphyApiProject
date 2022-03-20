@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.bumptech.glide.Glide
 import com.example.giphytest.ImageModel
 
@@ -15,17 +16,15 @@ class MyAdapter (val context: Context):
     private val list = mutableListOf<ImageModel>()
 
     inner class MyHolder(val binding: RvItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(url: String?) {
-       Glide.with(context).load(url).into(binding.giphyIm)
-//            Glide.with(context).load(url).into(binding.giphyIm)
-//            binding.giphyIm.load(url)
-//            binding.giphyIm.setOnClickListener {
-//                onClickListener.let { click ->
-//                    click?.let { it1 ->
-//                        it1(list.get(position))
-//                    }
-//                }
-//            }
+        fun bind(url: String?, position: Int) {
+            Glide.with(context).load(url).into(binding.giphyIm)
+            binding.giphyIm.setOnClickListener {
+                onClickListener.let { click ->
+                    click?.let { it1 ->
+                        it1(list.get(position))
+                    }
+                }
+            }
         }
     }
 
@@ -44,9 +43,9 @@ class MyAdapter (val context: Context):
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        val url = list[position].url?:""
+        val url = list[position].url
         Log.e("adpter",list.size.toString())
-        holder.bind(url)
+        holder.bind(url,position)
     }
 
 

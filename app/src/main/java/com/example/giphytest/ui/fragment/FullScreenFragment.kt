@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.giphytest.ImageModel
 
 import com.example.giphytest.databinding.FragmentFullScreenBinding
@@ -14,29 +15,21 @@ class FullScreenFragment : BaseFragment() {
     val binding get() = _binding!!
 
     companion object {
-        fun getNewInstance(str: String, arg: ImageModel?): FullScreenFragment {
+        fun getNewInstance(str: ImageModel?): FullScreenFragment {
             val fullScreenFragment = FullScreenFragment()
             val bundle = Bundle()
+            bundle.putParcelable("imageUrl", str)
             fullScreenFragment.arguments = bundle
             return fullScreenFragment
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val myModel: ImageModel = arguments?.getParcelable("list")!!
+        val myModel: ImageModel = arguments?.getParcelable("imageUrl")!!
+        Glide.with(requireContext()).load(myModel.url).into(binding.fullIm)
+
     }
-
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        val animation= TransitionInflater.from(requireContext()).inflateTransition(
-//            android.R.transition.move
-//        )
-//        sharedElementEnterTransition=animation
-//        sharedElementReturnTransition=animation
-//    }
 
 
     override fun onCreateView(
@@ -45,8 +38,7 @@ class FullScreenFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFullScreenBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroy() {

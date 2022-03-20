@@ -4,24 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.giphytest.ImageModel
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.giphytest.R
 import com.example.giphytest.adapter.MyAdapter
 import com.example.giphytest.databinding.FragmentMainBinding
 
-class MainFragment : BaseFragment() {
-//    private lateinit var adapter: MyAdapter
-    private lateinit var imageList: ArrayList<ImageModel>
-
-    //    private lateinit var  fragmentManager:FragmentManager
-    private lateinit var fullScreenFragment: FullScreenFragment
+class GiphListFragment : BaseFragment() {
+    private lateinit var adapter: MyAdapter
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private var MY_TAG = "MainFragment"
 
 
     companion object {
-        fun getNewInstance(str: String): MainFragment {
-            val mainFragment = MainFragment()
+        fun getNewInstance(str: String): GiphListFragment {
+            val mainFragment = GiphListFragment()
             val arg = Bundle()
             arg.putString("key", str)
             mainFragment.arguments = arg
@@ -29,17 +26,16 @@ class MainFragment : BaseFragment() {
         }
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageList = ArrayList()
+        initAdapter()
+        subscribeToObserver()
+        adapter.setOnItemClickListener { giph ->
+            activity?.supportFragmentManager?.beginTransaction()?.replace(
+                R.id.my_container, FullScreenFragment.getNewInstance(giph)
+            )?.commit()
+        }
     }
-
-
 
 
     override fun onCreateView(
@@ -51,13 +47,18 @@ class MainFragment : BaseFragment() {
         val view = binding.root
         return view
     }
-//    private fun initAdapter() {
-//        adapter = MyAdapter()
-//        binding.myRv.layoutManager = GridLayoutManager(requireContext(), 2)
-//        binding.myRv.adapter = adapter
-//
-//    }
 
+    private fun subscribeToObserver() {
+        giphyViewModel.items.observe(viewLifecycleOwner) { data ->
+            adapter.addItems(data)
+        }
+    }
+
+    private fun initAdapter() {
+        adapter = MyAdapter(requireContext())
+        binding.myRv.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.myRv.adapter = adapter
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

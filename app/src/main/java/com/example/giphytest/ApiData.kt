@@ -8,17 +8,15 @@ data class ApiData(
     val data: List<Images>
 )
 
-
 data class Images(
     @SerializedName("images")
     val images: DownsizedMedium
-    )
+)
 
 data class DownsizedMedium(
     @SerializedName("downsized_medium")
     val downSizedMedium: ImageUrl?
 )
-
 
 data class ImageUrl(
     @SerializedName("url")
