@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.giphytest.R
 import com.example.giphytest.adapter.MyAdapter
 import com.example.giphytest.databinding.FragmentMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class GiphListFragment : BaseFragment() {
-    private lateinit var adapter: MyAdapter
+    @Inject
+    lateinit var adapter: MyAdapter
+
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private var MY_TAG = "MainFragment"
 
 
     companion object {
@@ -31,10 +35,18 @@ class GiphListFragment : BaseFragment() {
         initAdapter()
         subscribeToObserver()
         adapter.setOnItemClickListener { giph ->
-            activity?.supportFragmentManager?.beginTransaction()?.replace(
-                R.id.my_container, FullScreenFragment.getNewInstance(giph)
-            )?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.my_container, FullScreenFragment.getNewInstance(giph))
+                addToBackStack(null)
+            }
+
+            ?.commit()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
     }
 
 
@@ -44,8 +56,7 @@ class GiphListFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     private fun subscribeToObserver() {
@@ -54,8 +65,7 @@ class GiphListFragment : BaseFragment() {
         }
     }
 
-    private fun initAdapter() {
-        adapter = MyAdapter(requireContext())
+    private fun initAdapter() = binding.myRv.apply {
         binding.myRv.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.myRv.adapter = adapter
     }

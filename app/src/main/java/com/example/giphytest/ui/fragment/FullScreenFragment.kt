@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.example.giphytest.ImageModel
+import com.bumptech.glide.RequestManager
+import com.example.giphytest.model.ImageModel
 
 import com.example.giphytest.databinding.FragmentFullScreenBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class FullScreenFragment : BaseFragment() {
+
     var _binding: FragmentFullScreenBinding? = null
     val binding get() = _binding!!
 
@@ -24,11 +28,15 @@ class FullScreenFragment : BaseFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        retainInstance = true
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val myModel: ImageModel = arguments?.getParcelable("imageUrl")!!
-        Glide.with(requireContext()).load(myModel.url).into(binding.fullIm)
-
+        glide.load(myModel.url).into(binding.fullIm)
     }
 
 

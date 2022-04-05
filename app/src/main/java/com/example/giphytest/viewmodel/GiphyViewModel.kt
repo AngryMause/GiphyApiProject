@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.giphytest.GiphyApiImp
-import com.example.giphytest.ImageModel
+import com.example.giphytest.model.ImageModel
 import kotlinx.coroutines.launch
 
 class GiphyViewModel : ViewModel() {

@@ -1,5 +1,7 @@
 package com.example.giphytest
 
+import com.example.giphytest.api.RestClient
+import com.example.giphytest.model.ImageModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -24,11 +26,9 @@ object GiphyApiImp {
         return withContext(Dispatchers.IO) {
             giphyService.getList().data
                 .map { data ->
-                    ImageModel(data.images.downSizedMedium?.url)
+                    ImageModel(data.images.downsized?.url)
                 }
-
         }
-
     }
 
 

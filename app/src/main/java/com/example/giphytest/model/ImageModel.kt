@@ -1,4 +1,4 @@
-package com.example.giphytest
+package com.example.giphytest.model
 
 import android.os.Parcel
 import android.os.Parcelable
