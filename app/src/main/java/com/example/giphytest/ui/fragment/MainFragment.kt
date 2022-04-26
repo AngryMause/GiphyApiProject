@@ -19,18 +19,6 @@ import com.example.giphytest.databinding.FragmentMainBinding
 class MainFragment : BaseFragment() {
     protected lateinit var myBundle: Bundle
 
-
-    companion object {
-        fun getNewInstance(str: String): MainFragment {
-            val mainFragment = MainFragment()
-            val arg = Bundle()
-            arg?.putString("key", str)
-            mainFragment.arguments = arg
-            return mainFragment
-        }
-    }
-
-
     private lateinit var adapter: MyAdapter
     private lateinit var imageList: ArrayList<MyModel>
     private lateinit var fullScreenFragment: FullScreenFragment
@@ -38,22 +26,24 @@ class MainFragment : BaseFragment() {
     private val binding get() = _binding!!
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imageList = ArrayList()
-        myBundle = Bundle()
         initAdapter()
         addImageToList()
-        adapter.setOnItemClickListener { click ->
-            myBundle.putSerializable("list",click.image)
-            fragmentManager?.beginTransaction()?.replace(R.id.my_container,FullScreenFragment.getNewInstance(myBundle))
-                ?.commit()
+        adapter.setOnItemClickListener { myModel ->
+            activity?.apply {
+                supportFragmentManager
+                    .beginTransaction().replace(
+                        R.id.my_container, FullScreenFragment.getNewInstance(myModel)
+                    )
+                    .addToBackStack(null)
+                    .commit()
+            }
+
+
         }
     }
 

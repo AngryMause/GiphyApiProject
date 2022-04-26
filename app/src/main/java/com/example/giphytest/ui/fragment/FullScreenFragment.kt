@@ -1,38 +1,34 @@
 package com.example.giphytest.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-
+import android.widget.ImageView
+import com.example.giphytest.MyModel
+import com.example.giphytest.R
 import com.example.giphytest.databinding.FragmentFullScreenBinding
-
-
 class FullScreenFragment : BaseFragment() {
 
 
     companion object {
-        fun getNewInstance(arg: Bundle?): FullScreenFragment {
+        fun getNewInstance(arg: MyModel?): FullScreenFragment {
             val fullScreenFragment = FullScreenFragment()
-            fullScreenFragment.arguments = arg
+            val bundle=Bundle()
+            bundle.putParcelable("list",arg)
+            fullScreenFragment.arguments = bundle
             return fullScreenFragment
         }
     }
+
      var _binding: FragmentFullScreenBinding? = null
      val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Tag2", " My arguments ${arguments.toString()}")
-        val mytext = arguments?.getSerializable("list")
-        if (mytext == null) {
-            Toast.makeText(requireContext(), "arg == Null ", Toast.LENGTH_SHORT).show()
-        } else {
-            binding.fullIm.setImageResource(mytext as Int)
-            binding.textView.text= mytext.toString()
-        }
+        val image:MyModel=arguments?.getParcelable("list")!!
+//        image.image.let { binding.fullIm.setImageResource(it) }
+        binding.fullIm.setImageResource(image.image)
     }
 
     override fun onCreateView(
@@ -51,5 +47,6 @@ class FullScreenFragment : BaseFragment() {
     }
 
 }
+
 
 

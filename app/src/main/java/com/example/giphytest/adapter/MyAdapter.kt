@@ -16,39 +16,31 @@ import com.example.giphytest.ui.activity.MainActivity
 import com.giphy.sdk.analytics.GiphyPingbacks.context
 
 class MyAdapter(
-    private val list: List<MyModel>
-    ,private  var context: Context
+    private val list: List<MyModel>, private var context: Context
 ) :
     RecyclerView.Adapter<MyAdapter.MyHolder>() {
 
     inner class MyHolder(val binding: RvItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(myModel: MyModel, position: Int) {
+        fun bind(myModel: MyModel, pos: Int) {
             binding.giphyIm.setImageResource(myModel.image)
-
             binding.giphyIm.setOnClickListener {
-                onClickListener.let { click ->
-                    click?.let { it1 ->
-                        it1(list.get(position))
-                        Log.d("Image", "position ${ bindingAdapterPosition.toString()}  ")
-                        notifyDataSetChanged()
-                    }
-
+                Toast.makeText(context,"${list.get(pos)}",Toast.LENGTH_SHORT).show()
+                            onClickListener?.invoke(list[pos])
                 }
 
             }
-//            itemView.setOnClickListener { click ->
-//                onClickListener.let { click ->
-//                    click?.let { it1 ->
+
+//            itemView.setOnClickListener {
+//                onClickListener.let { model ->
+//                    model?.let { it1 ->
 //                        it1(list.get(position))
-//                        Log.d("Image", "position ${ bindingAdapterPosition.toString()}  ")
-//                        notifyDataSetChanged()
 //                    }
 //
 //                }
 //
 //            }
 
-        }
+
 
     }
 
@@ -68,13 +60,13 @@ class MyAdapter(
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val image = list[position]
-        holder.bind(image, position)
+        holder.bind(image, pos = position)
     }
 
 
+    private var onClickListener: ((MyModel) -> Unit)? = null
 
-    var onClickListener: ((MyModel) -> Unit)? = null
-    fun setOnItemClickListener(listener: (MyModel) -> Unit) {
+    fun setOnItemClickListener(listener: (MyModel)-> Unit) {
         onClickListener = listener
     }
 
