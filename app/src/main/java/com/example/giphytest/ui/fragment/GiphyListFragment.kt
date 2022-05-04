@@ -4,50 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.giphytest.R
 import com.example.giphytest.adapter.MyAdapter
 import com.example.giphytest.databinding.FragmentMainBinding
+import com.example.giphytest.viewmodel.GiphyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GiphListFragment : BaseFragment() {
+class GiphyListFragment : BaseFragment() {
     @Inject
-    lateinit var adapter: MyAdapter
+    lateinit var myAdapter: MyAdapter
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
+    //    private val viewModel by viewModels<GiphyViewModel>()
+    private lateinit var giphyViewModel: GiphyViewModel
 
-    companion object {
-        fun getNewInstance(str: String): GiphListFragment {
-            val mainFragment = GiphListFragment()
-            val arg = Bundle()
-            arg.putString("key", str)
-            mainFragment.arguments = arg
-            return mainFragment
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        giphyViewModel = ViewModelProvider(requireActivity()).get(GiphyViewModel::class.java)
         initAdapter()
         subscribeToObserver()
-        adapter.setOnItemClickListener { giph ->
+        myAdapter.setOnItemClickListener { giphy ->
             activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.my_container, FullScreenFragment.getNewInstance(giph))
+                replace(R.id.my_container, FullScreenFragment.getNewInstance(giphy))
                 addToBackStack(null)
             }
-
-            ?.commit()
+                ?.commit()
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
 
 
     override fun onCreateView(
@@ -61,13 +52,13 @@ class GiphListFragment : BaseFragment() {
 
     private fun subscribeToObserver() {
         giphyViewModel.items.observe(viewLifecycleOwner) { data ->
-            adapter.addItems(data)
+            myAdapter.addItems(data)
         }
     }
 
-    private fun initAdapter() = binding.myRv.apply {
-        binding.myRv.layoutManager = GridLayoutManager(requireContext(), 2)
-        binding.myRv.adapter = adapter
+    private fun initAdapter() = _binding?.myRv?.apply {
+        adapter = myAdapter
+        layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
     override fun onDestroyView() {
