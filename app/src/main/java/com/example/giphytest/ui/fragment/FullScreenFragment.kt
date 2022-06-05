@@ -4,49 +4,43 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import com.example.giphytest.MyModel
-import com.example.giphytest.R
 import com.example.giphytest.databinding.FragmentFullScreenBinding
-class FullScreenFragment : BaseFragment() {
+import com.example.giphytest.model.ImageModel
+import com.example.giphytest.utill.Const.GIPHY_KEY
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class FullScreenFragment : BaseFragment() {
+    var _binding: FragmentFullScreenBinding? = null
+    val binding get() = _binding!!
 
     companion object {
-        fun getNewInstance(arg: MyModel?): FullScreenFragment {
+        fun getNewInstance(str: ImageModel?): FullScreenFragment {
             val fullScreenFragment = FullScreenFragment()
-            val bundle=Bundle()
-            bundle.putParcelable("list",arg)
+            val bundle = Bundle()
+            bundle.putParcelable(GIPHY_KEY, str)
             fullScreenFragment.arguments = bundle
             return fullScreenFragment
         }
     }
-
-     var _binding: FragmentFullScreenBinding? = null
-     val binding get() = _binding!!
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val image:MyModel=arguments?.getParcelable("list")!!
-//        image.image.let { binding.fullIm.setImageResource(it) }
-        binding.fullIm.setImageResource(image.image)
+        val myModel: ImageModel = arguments?.getParcelable(GIPHY_KEY)!!
+        glide.load(myModel.url).into(binding.fullIm)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFullScreenBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
 }
-
 
 
