@@ -10,9 +10,7 @@ import com.example.giphytest.utill.Const.GIPHY_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FullScreenFragment : BaseFragment() {
-    var _binding: FragmentFullScreenBinding? = null
-    val binding get() = _binding!!
+class FullScreenFragment : BaseFragment<FragmentFullScreenBinding>(FragmentFullScreenBinding::inflate) {
 
     companion object {
         fun getNewInstance(str: ImageModel?): FullScreenFragment {
@@ -28,18 +26,8 @@ class FullScreenFragment : BaseFragment() {
         val myModel: ImageModel = arguments?.getParcelable(GIPHY_KEY)!!
         glide.load(myModel.url).into(binding.fullIm)
     }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentFullScreenBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+
+
 
 }
 

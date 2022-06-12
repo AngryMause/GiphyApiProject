@@ -1,20 +1,33 @@
 package com.example.giphytest.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.RequestManager
 import javax.inject.Inject
 
-
-abstract class BaseFragment : Fragment() {
+typealias Inflate<T> = (LayoutInflater, ViewGroup?,Boolean )->T
+abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) : Fragment() {
     @Inject
     lateinit var glide: RequestManager
+    private var _binding: VB? = null
+    protected val binding get() = _binding!!
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding=inflate.invoke(inflater,container,false)
+        return binding.root
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding=null
+    }
 
 }
 
