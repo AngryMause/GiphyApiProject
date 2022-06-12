@@ -1,4 +1,4 @@
-package com.example.giphytest.di
+package com.example.giphytest.di.hilt
 
 import com.example.giphytest.MainRepository
 import com.example.giphytest.api.MainService

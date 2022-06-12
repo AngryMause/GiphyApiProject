@@ -1,4 +1,4 @@
-package com.example.giphytest.di
+package com.example.giphytest.di.hilt
 
 import android.content.Context
 import com.bumptech.glide.Glide
@@ -13,7 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module
 @InstallIn(ActivityComponent::class)
-object Module {
+object GlideModule {
     @Provides
     fun provideGlide(@ApplicationContext context: Context) =
         Glide.with(context).setDefaultRequestOptions(
