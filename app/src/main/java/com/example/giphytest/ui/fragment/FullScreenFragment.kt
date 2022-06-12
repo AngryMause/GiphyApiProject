@@ -25,7 +25,9 @@ class FullScreenFragment : BaseFragment<FragmentFullScreenBinding>(FragmentFullS
         super.onViewCreated(view, savedInstanceState)
         val myModel: ImageModel = arguments?.getParcelable(GIPHY_KEY)!!
         glide.load(myModel.url).into(binding.fullIm)
+
     }
+
 
 
 
