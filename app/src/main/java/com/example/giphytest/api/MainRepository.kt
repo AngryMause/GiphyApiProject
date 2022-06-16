@@ -19,6 +19,4 @@ class MainRepository @Inject constructor(private val giphyApi: MainService) {
                 }
         }
     }
-
-
 }

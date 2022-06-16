@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GyphyiViewModelWithFlow @Inject constructor(val mainRepository: MainRepository) :
+class GyphyViewModelWithFlow @Inject constructor(val mainRepository: MainRepository) :
     ViewModel() {
     private val _items = MutableStateFlow(emptyList<ImageModel>())
     val items: StateFlow<List<ImageModel>> = _items

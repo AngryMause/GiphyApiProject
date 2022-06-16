@@ -2,7 +2,6 @@ package com.example.giphytest.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +10,7 @@ import com.example.giphytest.R
 import com.example.giphytest.adapter.MyAdapter
 import com.example.giphytest.databinding.FragmentGiphyListBinding
 import com.example.giphytest.utill.launchWhenStarted
-import com.example.giphytest.viewmodel.GyphyiViewModelWithFlow
+import com.example.giphytest.viewmodel.GyphyViewModelWithFlow
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -21,12 +20,13 @@ class GiphyListFragment :
     BaseFragment<FragmentGiphyListBinding>(FragmentGiphyListBinding::inflate) {
     @Inject
     lateinit var myAdapter: MyAdapter
-    private val giphyViewModelWithFlow: GyphyiViewModelWithFlow by viewModels()
+    private val giphyViewModelWithFlow: GyphyViewModelWithFlow by viewModels()
     private lateinit var transaction: FragmentTransaction
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
+
         transaction = activity?.supportFragmentManager!!.beginTransaction()
         transaction.setCustomAnimations(
             android.R.anim.fade_in, android.R.anim.fade_out
@@ -50,6 +50,7 @@ class GiphyListFragment :
 //        transaction.setCustomAnimations(R.anim.enter, R.anim.exit)
         giphyViewModelWithFlow.items.onEach { giphyList ->
             myAdapter.addItems(giphyList)
+
         }.launchWhenStarted(lifecycleScope)
     }
 
