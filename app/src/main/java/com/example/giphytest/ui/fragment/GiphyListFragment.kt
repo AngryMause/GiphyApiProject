@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.giphytest.R
 import com.example.giphytest.adapter.MyAdapter
 import com.example.giphytest.databinding.FragmentGiphyListBinding
+import com.example.giphytest.model.ImageModel
+import com.example.giphytest.utill.Const
 import com.example.giphytest.utill.launchWhenStarted
 import com.example.giphytest.viewmodel.GyphyViewModelWithFlow
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,24 +23,18 @@ class GiphyListFragment :
     @Inject
     lateinit var myAdapter: MyAdapter
     private val giphyViewModelWithFlow: GyphyViewModelWithFlow by viewModels()
-    private lateinit var transaction: FragmentTransaction
+
+    companion object {
+        fun getNewInstance(): GiphyListFragment {
+            return GiphyListFragment()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-
-        transaction = activity?.supportFragmentManager!!.beginTransaction()
-        transaction.setCustomAnimations(
-            android.R.anim.fade_in, android.R.anim.fade_out
-        )
         myAdapter.setOnItemClickListener { giphy ->
-            transaction.apply {
-                replace(
-                    R.id.my_container, FullScreenFragment.getNewInstance(giphy), "h"
-                )
-//                    .addToBackStack("h")
-            }
-                .commit()
+            replaceFragment(FullScreenFragment.getNewInstance(giphy))
 
         }
     }
@@ -46,8 +42,6 @@ class GiphyListFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        transaction = activity?.supportFragmentManager!!.beginTransaction()
-//        transaction.setCustomAnimations(R.anim.enter, R.anim.exit)
         giphyViewModelWithFlow.items.onEach { giphyList ->
             myAdapter.addItems(giphyList)
 

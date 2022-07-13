@@ -20,5 +20,5 @@ data class Downsized(
 
 data class ImageUrl(
     @SerializedName("url")
-    val url: String?
+    val imageURL: String?
 )

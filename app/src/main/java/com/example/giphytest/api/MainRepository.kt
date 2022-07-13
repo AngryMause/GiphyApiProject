@@ -15,7 +15,7 @@ class MainRepository @Inject constructor(private val giphyApi: MainService) {
         return withContext(Dispatchers.IO) {
             giphyApi.getList().data
                 .map { data ->
-                    ImageModel(data.images.downsized?.url)
+                    ImageModel(data.images.downsized?.imageURL)
                 }
         }
     }

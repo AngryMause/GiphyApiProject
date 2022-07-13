@@ -11,7 +11,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var glide:RequestManager
+    lateinit var glide: RequestManager
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var giphyListFragment: GiphyListFragment
@@ -20,13 +20,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         giphyListFragment = GiphyListFragment()
         supportFragmentManager.beginTransaction().apply {
             replace(binding.myContainer.id, giphyListFragment)
         }.commit()
+    }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null!!
 
     }
+
+
 }
 
 

@@ -31,6 +31,6 @@ object ModuleRetrofit {
 
         @Provides
         @Singleton
-        fun provideGiphyApiImp(giphyApi: MainService ) :MainRepository= MainRepository(giphyApi,)
+        fun provideGiphyApiImp(giphyApi: MainService ) :MainRepository= MainRepository(giphyApi)
 
 }

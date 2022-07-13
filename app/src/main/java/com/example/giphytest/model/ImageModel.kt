@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ImageModel(var url: String?):Parcelable
+data class ImageModel(var imageURL: String?):Parcelable

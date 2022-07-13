@@ -25,7 +25,7 @@ class MyAdapter @Inject constructor(private var glide: RequestManager) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): MyHolder {
         return MyHolder(
             RvItemLayoutBinding.inflate(
@@ -37,7 +37,7 @@ class MyAdapter @Inject constructor(private var glide: RequestManager) :
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        val urlImage = list[position].url
+        val urlImage = list[position].imageURL
         holder.bind(urlImage, position)
     }
 
