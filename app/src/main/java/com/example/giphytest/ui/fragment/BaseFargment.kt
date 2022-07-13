@@ -17,7 +17,6 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
     @Inject
     lateinit var glide: RequestManager
     private lateinit var transaction: FragmentTransaction
-
     private var _binding: VB? = null
     protected val binding get() = _binding!!
 
@@ -42,7 +41,6 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
                 .addToBackStack(null)
         }
             .commit()
-
     }
 
     override fun onDestroy() {

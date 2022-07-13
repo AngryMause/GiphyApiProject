@@ -3,6 +3,7 @@ package com.example.giphytest.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ViewCompat
 import com.example.giphytest.databinding.FragmentFullScreenBinding
 import com.example.giphytest.model.ImageModel
 import com.example.giphytest.utill.Const.GIPHY_KEY
@@ -11,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FullScreenFragment :
     BaseFragment<FragmentFullScreenBinding>(FragmentFullScreenBinding::inflate) {
-
     companion object {
         fun getNewInstance(str: ImageModel?): FullScreenFragment {
             val fullScreenFragment = FullScreenFragment()
@@ -27,7 +27,6 @@ class FullScreenFragment :
         val myModel: ImageModel = arguments?.getParcelable(GIPHY_KEY)!!
         glide.load(myModel.imageURL).into(binding.fullIm)
         onBack()
-
     }
 
     private fun onBack() {
